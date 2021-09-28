@@ -96,7 +96,7 @@ public class BOJ1865 {
         return false;
     }
 
-    static class Node {
+    private static class Node {
 
         int end;
         int weight;
