@@ -54,7 +54,7 @@ public class BOJ2638 {
             // 큐에 들어있는 치즈 좌표를 토대로 matrix 업데이트, ANSWER++
             ANSWER++;
 
-            while (!queue.isEmpty()) {
+            while (!queue.isEmpty()) { // 치즈 녹이기
                 Node cheese = queue.poll();
                 matrix[cheese.x][cheese.y] = -1;
             }
@@ -73,9 +73,6 @@ public class BOJ2638 {
         System.out.println(ANSWER);
     }
 
-    private static void rollbackMatrix() {
-    }
-
     private static void bfs_out() {
 
         queue.add(new Node(0, 0));
@@ -91,6 +88,10 @@ public class BOJ2638 {
 
                 if (nx >= N || nx < 0 || ny >= M || ny < 0) continue;
 
+                // -1 이면 이미 방문한 공기 (외부)
+                // 0 이면 방문하지 않은 공기 (무조건 외부 공기)
+                // 외부 공기에 인접한 공기가 내부 공기일 수 없음
+                // 즉, matrix[nx][ny]가 0 일 때 방문 여부를 확인할 필요 X
                 if (matrix[nx][ny] != 0) continue;
 
                 queue.add(new Node(nx, ny));
@@ -112,14 +113,13 @@ public class BOJ2638 {
 
                 if (matrix[i][j] == 1 && !visited[i][j]) { // 방문하지 않은 치즈
 
+                    visited[i][j] = true;
                     int count = 0;
 
                     for (int k = 0; k < 4; k++) { // 상, 하, 좌, 우 확인
 
                         int nx = i + dx[k];
                         int ny = j + dy[k];
-
-                        if (nx >= N || nx < 0 || ny >= M || ny < 0) continue;
 
                         if (matrix[nx][ny] != -1) continue; // 외부 공기가 아니면 패스
 
@@ -128,7 +128,6 @@ public class BOJ2638 {
                     }
 
                     if (count >= 2) { // 외부 공기 2개 이상 둘러 쌓여 있을 때
-                        visited[i][j] = true;
                         queue.add(new Node(i, j));
                         isUpdatable = true;
                     }
