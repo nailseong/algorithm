@@ -71,16 +71,4 @@ public class BOJ1700 {
         System.out.println(answer);
     }
 
-    private static void print(int i) {
-        System.out.println(i + 1 + " -> answer : " + answer);
-        for (int j = 1; j <= K; j++) {
-            System.out.print(j + " ");
-        }
-        System.out.println();
-        for (int j = 1; j <= K; j++) {
-            System.out.print(isInUse[j] ? "T " : "F ");
-        }
-        System.out.println("\n");
-    }
-
 }
